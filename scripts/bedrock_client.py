@@ -1,36 +1,32 @@
-import os
+import sys
 import time
 from pathlib import Path
 
 import boto3
-from dotenv import load_dotenv
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-load_dotenv(PROJECT_ROOT / '.env')
+if str(PROJECT_ROOT) not in sys.path:
+	sys.path.insert(0, str(PROJECT_ROOT))
 
-REGION = 'us-east-2'
-BEARER_TOKEN = os.getenv('AWS_BEARER_TOKEN_BEDROCK')
+from settings import BEARER_TOKEN, GENERATION_MODELS, REGION
+
 
 if not BEARER_TOKEN:
 	raise ValueError('AWS_BEARER_TOKEN_BEDROCK not found in .env')
 
 bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION)
 
-# selected model ids - obtained from running list_foundation_models.py
-MODELS = {
-	'nova_lite': 'amazon.nova-lite-v1:0',
-	'nova_micro': 'amazon.nova-micro-v1:0',
-	'qwen3_32b': 'qwen.qwen3-32b-v1:0',
-	'llama_scout': 'us.meta.llama4-scout-17b-instruct-v1:0',
-}
+# Backward-compatible alias used by older imports.
+MODELS = GENERATION_MODELS
+generation_models = GENERATION_MODELS
 
 
 def invoke_model(model_name, prompt, max_tokens=1000, temperature=0.0):
 
-	if model_name not in MODELS:
+	if model_name not in GENERATION_MODELS:
 		raise ValueError(f'Unknown model: {model_name}')
 
-	model_id = MODELS[model_name]
+	model_id = GENERATION_MODELS[model_name]
 	start_time = time.perf_counter()
 
 	try:

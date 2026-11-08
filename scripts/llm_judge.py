@@ -1,24 +1,19 @@
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
 from bedrock_client import invoke_model
 
-ROOT = Path(__file__).resolve().parent.parent
+from settings import CRITERIA_DIR, INPUT_DIR, LLM_JUDGE_MODEL, OUTPUT_DIR, WORKLOADS
+from settings import PROJECT_ROOT as SETTINGS_ROOT
 
-# Nova Lite is the evaluation judge
-JUDGE_MODEL = 'nova_lite'
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+	sys.path.insert(0, str(PROJECT_ROOT))
 
-WORKLOADS = [
-	'product_catalogue_extraction',
-	'customer_issue_classification',
-	'product_review_summarization',
-	'customer_response_drafting',
-]
 
-INPUT_DIR = ROOT / 'data' / 'outputs'
-CRITERIA_DIR = ROOT / 'evaluation_criteria'
-OUTPUT_DIR = ROOT / 'results' / 'evaluations'
+# Use the shared LLM-as-a-Judge model constant defined in settings.
 
 
 def load_criteria(workload):
@@ -31,7 +26,7 @@ def load_criteria(workload):
 
 
 def build_judge_prompt(input_data, generated_output, criteria_data):
-	prompt_file = ROOT / 'prompts' / 'llm_judge.txt'
+	prompt_file = SETTINGS_ROOT / 'prompts' / 'llm_judge.txt'
 
 	prompt_template = prompt_file.read_text(encoding='utf-8')
 
@@ -94,7 +89,7 @@ def evaluate_workload(workload):
 
 		try:
 			judge_response = invoke_model(
-				model_name=JUDGE_MODEL, prompt=prompt, max_tokens=1500, temperature=0.0
+				model_name=LLM_JUDGE_MODEL, prompt=prompt, max_tokens=1500, temperature=0.0
 			)
 
 			evaluation = parse_judge_output(judge_response['output'])
@@ -108,7 +103,7 @@ def evaluate_workload(workload):
 					'scores': json.dumps(evaluation.get('scores', []), ensure_ascii=False),
 					'overall_score': evaluation.get('overall_score'),
 					'overall_comment': evaluation.get('overall_comment'),
-					'judge_model': JUDGE_MODEL,
+					'judge_model': LLM_JUDGE_MODEL,
 					'judge_latency_seconds': judge_response['latency_seconds'],
 					'status': 'success',
 				}
@@ -126,7 +121,7 @@ def evaluate_workload(workload):
 					'scores': None,
 					'overall_score': None,
 					'overall_comment': str(error),
-					'judge_model': JUDGE_MODEL,
+					'judge_model': LLM_JUDGE_MODEL,
 					'judge_latency_seconds': None,
 					'status': 'failed',
 				}

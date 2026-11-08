@@ -1,11 +1,13 @@
+import sys
 from pathlib import Path
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+	sys.path.insert(0, str(PROJECT_ROOT))
 
-EVALUATION_DIR = ROOT / 'results' / 'evaluations'
-COMPARISON_DIR = ROOT / 'results' / 'comparisons'
+from settings import INPUT_DIR, OUTPUT_DIR  # noqa: E402
 
 WORKLOADS = [
 	'product_catalogue_extraction',
@@ -17,9 +19,9 @@ WORKLOADS = [
 
 def compare_workload(workload):
 
-	input_file = EVALUATION_DIR / f'{workload}_evaluation.csv'
+	input_file = INPUT_DIR / f'{workload}_evaluation.csv'
 
-	generation_file = ROOT / 'data' / 'outputs' / f'{workload}_results.csv'
+	generation_file = INPUT_DIR / f'{workload}_results.csv'
 
 	if not input_file.exists() or not generation_file.exists():
 		print(f'Skipping {workload}: required files not found.')
@@ -68,9 +70,9 @@ def compare_workload(workload):
 	comparison = comparison.sort_values(by='average_quality_score', ascending=False)
 
 	# Save comparison CSV
-	COMPARISON_DIR.mkdir(parents=True, exist_ok=True)
+	OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-	output_file = COMPARISON_DIR / f'{workload}_model_comparison.csv'
+	output_file = OUTPUT_DIR / f'{workload}_model_comparison.csv'
 
 	comparison.to_csv(output_file, index=False)
 

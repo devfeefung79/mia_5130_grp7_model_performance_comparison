@@ -45,6 +45,18 @@ def load_dataset():
 
 	df = pd.read_csv(INPUT_FILE)
 
+	# add filter - country = CA
+	df = df[df['country'].astype(str).str.strip().str.lower() == 'ca'].copy()
+
+	if 'language_tag' in df.columns:
+		before_count = len(df)
+		df = df[df['language_tag'].astype(str).str.strip().str.lower() == 'en_ca'].copy()
+		print(
+			f'Filtered to {len(df)} products with language_tag == en_CA ({before_count} -> {len(df)})'
+		)
+	else:
+		print('No language_tag column found; using all products.')
+
 	print(f'Loaded {len(df)} products')
 	print('Available columns:')
 	print(df.columns.tolist())
@@ -58,6 +70,10 @@ def load_dataset():
 
 
 def select_products(df):
+
+	if 'language_tag' in df.columns:
+		df = df[df['language_tag'].astype(str).str.strip().str.lower() == 'en_ca'].copy()
+		print(f'Selected products filtered to en_CA: {len(df)} rows')
 
 	id_col = find_column(df, ID_COLUMNS)
 	title_col = find_column(df, TITLE_COLUMNS)

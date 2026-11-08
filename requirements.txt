@@ -1,0 +1,8 @@
+boto3
+pandas
+numpy
+python-dotenv
+pyarrow
+scikit-learn
+rouge-score
+bert-score

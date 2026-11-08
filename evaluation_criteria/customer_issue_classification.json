@@ -1,0 +1,33 @@
+
+{
+  "workload": "customer_issue_classification",
+  "scale": {
+    "1": "Very Poor",
+    "2": "Poor",
+    "3": "Average",
+    "4": "Good",
+    "5": "Excellent"
+  },
+  "criteria": [
+    {
+      "name": "Classification Accuracy",
+      "description": "The assigned issue category correctly represents the customer's main problem."
+    },
+    {
+      "name": "Urgency Assessment",
+      "description": "The urgency level is appropriate based on the customer's situation."
+    },
+    {
+      "name": "Reasoning Quality",
+      "description": "The explanation clearly supports the selected issue category."
+    },
+    {
+      "name": "Information Handling",
+      "description": "The model correctly handles insufficient or ambiguous information without making unsupported assumptions."
+    },
+    {
+      "name": "Format Compliance",
+      "description": "The output follows the required JSON structure and uses valid classification labels."
+    }
+  ]
+}

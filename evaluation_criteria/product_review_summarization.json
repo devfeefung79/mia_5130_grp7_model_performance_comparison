@@ -1,0 +1,37 @@
+
+{
+  "workload": "product_review_summarization",
+  "scale": {
+    "1": "Very Poor",
+    "2": "Poor",
+    "3": "Average",
+    "4": "Good",
+    "5": "Excellent"
+  },
+  "criteria": [
+    {
+      "name": "Accuracy",
+      "description": "The summary accurately reflects the information expressed in the original reviews."
+    },
+    {
+      "name": "Completeness",
+      "description": "The summary captures the major positive and negative opinions."
+    },
+    {
+      "name": "Sentiment Accuracy",
+      "description": "The overall sentiment correctly reflects the general tone of the reviews."
+    },
+    {
+      "name": "Theme Identification",
+      "description": "The model identifies recurring opinions and common customer themes."
+    },
+    {
+      "name": "Conciseness",
+      "description": "The summary communicates important findings clearly without unnecessary repetition."
+    },
+    {
+      "name": "Hallucination Control",
+      "description": "The model does not introduce opinions or experiences that are absent from the reviews."
+    }
+  ]
+}

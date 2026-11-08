@@ -1,0 +1,37 @@
+
+{
+  "workload": "customer_response_drafting",
+  "scale": {
+    "1": "Very Poor",
+    "2": "Poor",
+    "3": "Average",
+    "4": "Good",
+    "5": "Excellent"
+  },
+  "criteria": [
+    {
+      "name": "Relevance",
+      "description": "The response directly addresses the customer's concern."
+    },
+    {
+      "name": "Empathy",
+      "description": "The response acknowledges the customer's situation and demonstrates understanding."
+    },
+    {
+      "name": "Professionalism",
+      "description": "The response uses polite, clear and professional language."
+    },
+    {
+      "name": "Helpfulness",
+      "description": "The response provides appropriate and actionable next steps."
+    },
+    {
+      "name": "Policy Compliance",
+      "description": "The response does not make unauthorised promises or invent company policies."
+    },
+    {
+      "name": "Factuality",
+      "description": "The response is consistent with the provided product and customer information."
+    }
+  ]
+}

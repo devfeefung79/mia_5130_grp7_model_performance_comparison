@@ -1,0 +1,33 @@
+
+{
+  "workload": "product_catalogue_extraction",
+  "scale": {
+    "1": "Very Poor",
+    "2": "Poor",
+    "3": "Average",
+    "4": "Good",
+    "5": "Excellent"
+  },
+  "criteria": [
+    {
+      "name": "Accuracy",
+      "description": "Extracted information accurately matches the original product data."
+    },
+    {
+      "name": "Completeness",
+      "description": "All available relevant product fields are extracted."
+    },
+    {
+      "name": "Relevance",
+      "description": "Extracted information is relevant to the requested product fields."
+    },
+    {
+      "name": "Hallucination Control",
+      "description": "The model does not invent or assume product information that is absent from the source."
+    },
+    {
+      "name": "Format Compliance",
+      "description": "The output follows the required JSON structure and data types."
+    }
+  ]
+}

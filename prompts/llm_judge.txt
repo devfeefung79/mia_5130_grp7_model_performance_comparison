@@ -1,0 +1,39 @@
+
+You are an impartial evaluator assessing the quality of an AI model's response.
+
+WORKLOAD:
+{workload}
+
+ORIGINAL INPUT:
+{input_data}
+
+MODEL-GENERATED OUTPUT:
+{generated_output}
+
+EVALUATION SCALE:
+{scale}
+
+EVALUATION CRITERIA:
+{criteria}
+
+INSTRUCTIONS:
+1. Evaluate the generated output using every evaluation criterion.
+2. Give each criterion a score from 1 to 5.
+3. Provide a short explanation for each score.
+4. Base your evaluation only on the original input, generated output, and criteria.
+5. Do not reward information that is unsupported by the original input.
+6. Calculate the overall score as the arithmetic mean of all criterion scores.
+7. Return valid JSON only. Do not include Markdown code fences.
+
+Use this JSON structure:
+{
+    "scores": [
+        {
+            "criterion": "Criterion Name",
+            "score": 1,
+            "reason": "Short explanation"
+        }
+    ],
+    "overall_score": 0.0,
+    "overall_comment": "Brief overall assessment"
+}

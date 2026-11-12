@@ -13,6 +13,9 @@ from bedrock_client import invoke_model
 from settings import PROJECT_ROOT as SETTINGS_ROOT
 from settings import generation_models
 
+# Ground-truth / labelling columns that must never be shown to the model
+EXCLUDED_PROMPT_COLUMNS = {'expected_response_points', 'expected_category', 'difficulty'}
+
 
 def run_workload(workload, input_file):
 
@@ -30,9 +33,10 @@ def run_workload(workload, input_file):
 
 	for _, row in df.iterrows():
 		input_data = row.to_dict()
+		prompt_data = {k: v for k, v in input_data.items() if k not in EXCLUDED_PROMPT_COLUMNS}
 
 		prompt = prompt_template.replace(
-			'{product_data}', json.dumps(input_data, ensure_ascii=False, default=str)
+			'{product_data}', json.dumps(prompt_data, ensure_ascii=False, default=str)
 		)
 
 		for model in generation_models:

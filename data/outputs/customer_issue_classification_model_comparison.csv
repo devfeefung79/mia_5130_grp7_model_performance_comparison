@@ -1,0 +1,5 @@
+workload,model_name,average_quality_score,successful_evaluations,average_latency_seconds,average_input_tokens,average_output_tokens
+customer_issue_classification,nvidia_nemotron_nano_12b,4.82,25,0.95,585.68,99.36
+customer_issue_classification,nova_lite,4.64,25,0.73,618.8,66.68
+customer_issue_classification,qwen3_32b,4.61,25,0.6,570.04,69.84
+customer_issue_classification,llama_scout_17b,4.56,25,0.95,577.08,102.24

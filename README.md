@@ -1,50 +1,45 @@
-# AWS Bedrock Model Performance Comparsion
+# AWS Bedrock Model Performance Comparison
 
 ## Setup
 
-### Python Package Manager
-
-uv is used for the package manager given its robustness and performance.
-
-Make sure you have uv installed in your environment.
+Install `uv`, create a virtual environment, and install the dependencies:
 
 ```bash
 pip install uv
-```
-
-### Python Virtual Environement
-
-It is always a best practice to create a virtual environment for running a Python project instead of the global python environment.
-
-Make sure you create and activate the project virtual environment.
-
-```bash
-uv venv ./venv
-source venv/Scripts/activate
-```
-
-### Project Dependency
-
-Install required dependencies
-
-```bash
+uv venv
+source .venv/bin/activate
 uv pip install -r requirements.txt
 ```
 
-### Linter and Formatter
+## Configure Amazon Bedrock
 
-Ruff is used in this project as linter and formatter, promote code quality and team collaboration.
+1. In the AWS Console, select the `us-east-2` region, open **Amazon Bedrock > API keys**, and generate a **short-term API key**. It expires when your console session ends, up to 12 hours.
+2. Copy `.env.example` to `.env` and set `AWS_BEARER_TOKEN_BEDROCK` to the generated key:
 
-Here are some commonly used commands:
+   ```bash
+   cp .env.example .env
+   ```
 
-Check Python error
+   Keep the key private; do not commit `.env`.
+
+See the [Amazon Bedrock API key guide](https://docs.aws.amazon.com/bedrock/latest/userguide/api-keys.html) for details.
+
+## Run
+
+Run the workload scripts for the datasets you want to process:
 
 ```bash
-ruff check
+python scripts/product_catalogue_extraction.py
+python scripts/customer_issue_classification.py
+python scripts/product_review_summarization.py
+python scripts/customer_response_drafting.py
 ```
 
-Format all Python files
+Then evaluate and compare the results:
 
 ```bash
-ruff format
+python scripts/llm_judge.py
+python scripts/evaluate_results.py
 ```
+
+Results are saved under `data/outputs/`. Model requests may incur AWS charges.

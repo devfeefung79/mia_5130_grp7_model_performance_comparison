@@ -24,7 +24,8 @@ def run_workload(workload, input_file):
 	output_file = output_dir / f'{workload}_results.csv'
 
 	# Load input data and prompt
-	df = pd.read_csv(input_file)
+	df = pd.read_csv(input_file, encoding='utf-8')
+
 	prompt_template = prompt_file.read_text(encoding='utf-8')
 
 	output_dir.mkdir(parents=True, exist_ok=True)
@@ -90,6 +91,6 @@ def run_workload(workload, input_file):
 					}
 				)
 
-	pd.DataFrame(results).to_csv(output_file, index=False)
+	pd.DataFrame(results).to_csv(output_file, index=False, encoding='utf-8')
 
 	print(f'\nResults saved to: {output_file}')

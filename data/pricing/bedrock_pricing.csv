@@ -1,0 +1,5 @@
+model_name,bedrock_model_pricing_name,region,input_price_usd_per_1m_tokens,output_price_usd_per_1m_tokens
+nvidia_nemotron_nano_12b,NVIDIA Nemotron Nano 2 VL,US East (N. Virginia) / us-east-1,0.2,0.6
+nova_lite,Amazon Nova Lite,US East (N. Virginia) / us-east-1,0.06,0.24
+qwen3_32b,Qwen3 32B,US East (N. Virginia) / us-east-1,0.15,0.6
+llama_scout_17b,Llama 4 Scout 17B,US East (N. Virginia) / us-east-1,0.17,0.66
